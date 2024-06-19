@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+
+    <!--Googlefonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!--Font Awesome-->
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--Custom Stylesheet-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>
+                <i class="fa fa-map-marker"></i>
+                <span id="location"></span>
+            </h2>
+            <h6 id="weather"></h6>
+            <h4><span id="temp"></span><sup>o</sup>C</h4>
+            <img src="" alt="" id="icon">
+            <button class="refresh" onclick="window.location.reload()"><i class="fa fa-refresh"></i></button>
+        </div>
+    </div>
+</body>
+<!--jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!--Openweathermap API-->
+<script>
+    link = "https://api.openweathermap.org/data/2.5/weather?q=chennai&appid=2cf18184b5e6f62c096208770b5f6ca5";
+    var request = new XMLHttpRequest();
+    request.open('GET',link,true);
+    request.onload = function(){
+        var obj = JSON.parse(this.response);
+        console.log(obj);
+
+    document.getElementById('weather').innerHTML = obj.weather[0].description;
+    document.getElementById('location').innerHTML = obj.name;
+    document.getElementById('temp').innerHTML = Math.round(obj.main.temp - 273.15);
+    document.getElementById('icon').src = "https://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
+
+    }
+    if(request.status >= 200 && request.status < 400){
+    }
+    else{
+        console.log('The city is not available ');
+    }
+    request.send();
+</script>
+
+</html>
